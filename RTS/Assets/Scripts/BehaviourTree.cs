@@ -147,11 +147,12 @@ public class BehaviourTree : MonoBehaviour
                 {
                     foreach (GameObject enemyGO in unitScript.getClosestEnemyTroop())
                     {
-                        Debug.Log("BT closestEnemy Troop Count " + unitScript.getClosestEnemyTroop().Count);
+                        Debug.Log("Behaviour Tree closestEnemy Troop Count " + unitScript.getClosestEnemyTroopWithoutUpdate().Count);
+
                         Unit enemyUnitScript = enemyGO.GetComponent<Unit>();
+
                         if ((enemyUnitScript.CurrentTroopClass == sb.getMatchups()[unitScript.CurrentTroopClass]) || (enemyUnitScript.CurrentTroopClass == TroopClass.Gatherer))
                         {
-                            //unitScript.updateClosestEnemyTroopsList();
                             troop.moveToGoal(enemyGO);
                             targetFound = true;
                             Task.current.Succeed();
@@ -163,15 +164,18 @@ public class BehaviourTree : MonoBehaviour
                     if (targetFound == false)
                     {
                         troop.moveToGoal(unitScript.EnemySpawner.gameObject);
-                        
+                        Task.current.Succeed();
+
                     }
                 }
                 else
                 {
                     troop.setGoal(unitScript.EnemySpawner.gameObject);
+                    Task.current.Succeed();
+
                 }
-                
-               
+
+
             }
             else if (unitScript.isGatherer()) // is a Gatherer
             {
@@ -308,7 +312,7 @@ public class BehaviourTree : MonoBehaviour
     //}
     public TroopClass findCounterClass()
     {
-        TroopClass counterClass = sb.matchups[getMostCommonEnemyClass()];
+        TroopClass counterClass = sb.matchups[sb.matchups[getMostCommonEnemyClass()]];
         return counterClass;
     }
     

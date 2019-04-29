@@ -13,7 +13,7 @@ public class TroopScript : Unit
     protected bool hasCollided = false;
     private SceneBuilder sb;
     //private AIDestinationSetter aIDSetterAccess;
-    private TeamNumber thisTeamNumber;
+   // private TeamNumber thisTeamNumber;
     private Unit unitScript;
     public enum TroopState
     {
@@ -34,7 +34,7 @@ public class TroopScript : Unit
     
     //public SceneBuilder Sb { get => sb; set => sb = value; }
     //public AIDestinationSetter AIDSetterAccess { get => aIDSetterAccess; set => aIDSetterAccess = value; }
-    public TroopClass CurrentTroopClass { get => currentTroopClass; set => currentTroopClass = value; }
+   // public TroopClass CurrentTroopClass { get => currentTroopClass; set => currentTroopClass = value; }
     public TroopState CurrentTroopState { get => currentTroopState; set => currentTroopState = value; }
     public Unit UnitScript { get => unitScript; set => unitScript = value; }
 

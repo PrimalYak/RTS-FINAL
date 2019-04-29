@@ -39,7 +39,7 @@ namespace SwordGC.AI.Actions
                 {
                     bool targetSet = false;
                     Unit unitScript = ally.GetComponent<TroopScript>();
-                    Debug.Log("Closest Enemies : " + unitScript.getClosestEnemyTroop().Count);
+                    Debug.Log("GOAP Tree Closest Enemies : " + unitScript.getClosestEnemyTroop().Count);
                     foreach (GameObject enemyGO in unitScript.getClosestEnemyTroop())
                     {
                         Unit enemyUnitScript = enemyGO.GetComponent<Unit>();

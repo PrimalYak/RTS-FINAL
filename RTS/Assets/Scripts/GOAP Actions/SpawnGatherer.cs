@@ -17,6 +17,7 @@ namespace SwordGC.AI.Actions
         public float costToApply;
         public string targetName = "Player2";
         public TaskExecutor taskExecutor;
+        public float enemyCountsModifier = 2f;
 
 
         void Start()
@@ -33,6 +34,7 @@ namespace SwordGC.AI.Actions
             preconditions.Add(Effects.RESOURCES_TO_GATHER, true);
 
             requiredRange = 1000f;
+            
             cost = 1;
 
 
@@ -41,7 +43,7 @@ namespace SwordGC.AI.Actions
         public override void Perform()
         {
             taskExecutor = target.GetComponent<TaskExecutor>();
-            cost = taskExecutor.scene.troopCosts[troopClass] - 10;
+            cost = taskExecutor.scene.troopCosts[troopClass] - WSU.enemyTroops.Count*2 - WSU.enemiesCloseToBase.Count*5;
             taskExecutor.tryPurchaseUnit(troopClass);
         }
 

@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 
 namespace SwordGC.AI.Actions
 {
@@ -30,13 +32,13 @@ namespace SwordGC.AI.Actions
 
         public override void Perform()
         {
-            Debug.Log("CommandTroopAttackBase called");
+            Debug.Log("CommandTroopDefendBase called");
             WSU = target.GetComponent<WorldStateUpdater>();
             foreach (GameObject ally in WSU.allyTroops)
             {
                 Unit unitScript = ally.GetComponent<Unit>();
                 Debug.Log("CTAB - unitScript : " + unitScript);
-                unitScript.moveToGoal(unitScript.EnemySpawner.gameObject);
+                unitScript.moveToGoal(WSU.enemiesCloseToBase.First());
             }
         }
 

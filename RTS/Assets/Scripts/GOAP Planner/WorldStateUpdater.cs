@@ -3,6 +3,8 @@ using SwordGC.AI.Goap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 
 
 public class WorldStateUpdater : MonoBehaviour
@@ -12,9 +14,9 @@ public class WorldStateUpdater : MonoBehaviour
     public List<GameObject> enemyTroops;
     public List<GameObject> allyTroops;
     public List<GameObject> Units;
-    private List<GameObject> enemiesCloseToBase;
-    private List<GameObject> alliesCloseToBase;
-    private float baseProximitySize = 5f;
+    public List<GameObject> enemiesCloseToBase;
+    public List<GameObject> alliesCloseToBase;
+    [SerializeField] private float baseProximitySize = 5f;
     public SceneBuilder scene;
     public TeamNumber thisTeamNumber = TeamNumber.t2;
     public LayerMask enemiesLayer;
@@ -59,7 +61,7 @@ public class WorldStateUpdater : MonoBehaviour
         Units.Clear();
         Units.AddRange(scene.getTroopsList());
         partitionTroopsList();
-        orderEnemiesByDistanceToBase();
+        
         updateClassCounts();
     }
     public bool areEnemiesNearBase()
@@ -134,19 +136,19 @@ public class WorldStateUpdater : MonoBehaviour
         if(Resources.Count>0) player2AI.setEffectResourcesToGather(true);
         else player2AI.setEffectResourcesToGather(false);
 
-        if (scene.getPlayerGoldCountsArray()[(int)TeamNumber.t2-1] > scene.troopCosts[TroopClass.Warrior]) player2AI.setEffectWarriorCost(true);
+        if (scene.getPlayerGoldCountsArray()[(int)TeamNumber.t2-1] >= scene.troopCosts[TroopClass.Warrior]) player2AI.setEffectWarriorCost(true);
         else player2AI.setEffectWarriorCost(false);
 
-        if (scene.getPlayerGoldCountsArray()[(int)TeamNumber.t2-1] > scene.troopCosts[TroopClass.Archer]) player2AI.setEffectArcherCost(true);
+        if (scene.getPlayerGoldCountsArray()[(int)TeamNumber.t2-1] >= scene.troopCosts[TroopClass.Archer]) player2AI.setEffectArcherCost(true);
         else player2AI.setEffectArcherCost(false);
 
-        if (scene.getPlayerGoldCountsArray()[(int)TeamNumber.t2-1] > scene.troopCosts[TroopClass.Mage]) player2AI.setEffectMageCost(true);
+        if (scene.getPlayerGoldCountsArray()[(int)TeamNumber.t2-1] >= scene.troopCosts[TroopClass.Mage]) player2AI.setEffectMageCost(true);
         else player2AI.setEffectMageCost(false);
 
-        if (scene.getPlayerGoldCountsArray()[(int)TeamNumber.t2-1] > scene.troopCosts[TroopClass.Gatherer]) player2AI.setEffectGathererCost(true);
+        if (scene.getPlayerGoldCountsArray()[(int)TeamNumber.t2-1] >= scene.troopCosts[TroopClass.Gatherer]) player2AI.setEffectGathererCost(true);
         else player2AI.setEffectGathererCost(false);
 
-        if (enemiesCloseToBase.Count > 0) player2AI.setEffectEnemiesNearBase(true);
+        if (areEnemiesNearBase()) player2AI.setEffectEnemiesNearBase(true);
         else player2AI.setEffectEnemiesNearBase(false);
 
 

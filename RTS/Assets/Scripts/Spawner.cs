@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using UnityEngine.SceneManagement;
 public enum TeamNumber
 {
     t1 = 1, t2 = 2
@@ -91,7 +93,10 @@ public class Spawner : MonoBehaviour
     {
         if (health <= 0)
         {
+
             Destroy(gameObject);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         }
     }
     public GameObject MakeTroop(TroopClass _troopClass)

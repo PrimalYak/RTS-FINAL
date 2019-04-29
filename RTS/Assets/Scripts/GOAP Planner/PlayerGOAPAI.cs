@@ -22,7 +22,7 @@ public class PlayerGOAPAI : GoapAgent
         
         goals.Add(GoapGoal.Goals.KILL_ENEMY_BASE, new KillEnemyBaseGoal(GoapGoal.Goals.KILL_ENEMY_BASE, 1f));
 
-        goals.Add(GoapGoal.Goals.SPAWN_TROOPS, new SpawnTroops(GoapGoal.Goals.SPAWN_TROOPS, 1f));
+        goals.Add(GoapGoal.Goals.SPAWN_TROOPS, new SpawnTroops(GoapGoal.Goals.SPAWN_TROOPS, 0.5f));
 
         // create Actions
 
@@ -39,7 +39,7 @@ public class PlayerGOAPAI : GoapAgent
 
 
 
-        possibleActions.Add(new SpawnTroopAction(this));
+            possibleActions.Add(new SpawnTroopAction(this));
             //possibleActions.Add(new WaitForGoldAction(this));
             possibleActions.Add(new SpawnWarrior(this));
             possibleActions.Add(new SpawnArcher(this));
@@ -47,6 +47,9 @@ public class PlayerGOAPAI : GoapAgent
             possibleActions.Add(new SpawnGatherer(this));
             possibleActions.Add(new CommandTroopAttackEnemyTroops(this));
             possibleActions.Add(new CommandTroopAttackEnemyBase(this));
+            possibleActions.Add(new CommandTroopDefendHomeBase(this));
+
+
 
 
 

@@ -119,18 +119,20 @@ public abstract class Unit : MonoBehaviour
     {
 
     }
-    public virtual void updateClosestEnemyTroopsList()
+    public void updateClosestEnemyTroopsList()
     {
         closestEnemyTroops.Clear();
-        Debug.Log("Sb Troops List Count :::" + Sb.getTroopsList().Count);
+        //Debug.Log("Sb Troops List Count :::" + Sb.getTroopsList().Count);
         foreach (GameObject unit in Sb.getTroopsList())
         {
-            if (unit.GetComponent<Unit>() != null)
+            if (unit != this.gameObject)
             {
-                Unit unitScript = unit.GetComponent<Unit>();
-                if (unitScript.ThisTeamNumber != ThisTeamNumber) closestEnemyTroops.Add(unit);
+                if (unit.GetComponent<Unit>() != null)
+                {
+                    Unit unitScript = unit.GetComponent<Unit>();
+                    if (unitScript.ThisTeamNumber != ThisTeamNumber) closestEnemyTroops.Add(unit);
+                }
             }
-
         }
         //closestEnemyTroops.AddRange();
         closestEnemyTroops.Sort(SortByDistanceToUnit);
@@ -255,9 +257,13 @@ public abstract class Unit : MonoBehaviour
         if (gameObject.GetComponent<GatherersAI>() != null) return true;
         else return false;
     }
-    public virtual List<GameObject> getClosestEnemyTroop()
+    public List<GameObject> getClosestEnemyTroop()
     {
         updateClosestEnemyTroopsList();
+        return closestEnemyTroops;
+    }
+    public  List<GameObject> getClosestEnemyTroopWithoutUpdate()
+    {
         return closestEnemyTroops;
     }
     public virtual TeamNumber getThisTeamNumber()
