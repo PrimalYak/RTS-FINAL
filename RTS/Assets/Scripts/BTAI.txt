@@ -1,0 +1,37 @@
+tree("Root")
+	repeat
+		parallel
+			mute tree("SpawnTroops")
+			mute tree("ManageTroops")
+			mute tree("EnemiesInBase")
+			
+			
+
+tree("ManageTroops")
+		while not areEnemiesNearBase()
+			tree("ManageActiveTroops")
+
+tree("EnemiesInBase")
+	while 
+		areEnemiesNearBase()
+		callDefendBase()
+
+tree("ManageActiveTroops")
+	sequence initializeMAT()
+		while stillTroopsToManage()
+			sequence
+				manageTroop()
+					
+					
+		
+		
+tree("SpawnTroops")
+	
+	fallback
+		tree("SpawnCounter")
+		spawnGatherer()	
+		
+tree("SpawnCounter")
+	sequence
+		enemyTroopsAlive()
+		SpawnCounterTroop()
