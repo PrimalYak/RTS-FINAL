@@ -15,6 +15,7 @@ public class SceneBuilder : MonoBehaviour {
 
     public GameObject base1;
     public GameObject base2;
+    public GameObject[] bases;
     public GameObject resourceGameObject;
     [HideInInspector] public Resource resource;
 
@@ -63,6 +64,14 @@ public class SceneBuilder : MonoBehaviour {
         matchups = new Dictionary<TroopClass, TroopClass>();
         Resources = new List<GameObject>();
         Troops = new List<GameObject>();
+
+
+        bases = GameObject.FindGameObjectsWithTag("Base");
+        foreach(GameObject baseHub in bases)
+        {
+            if (baseHub.GetComponent<Spawner>().thisteamNumber == TeamNumber.t1) base1 = baseHub;
+            else if(baseHub.GetComponent <Spawner>().thisteamNumber == TeamNumber.t2) base1 = baseHub;
+        }
 
         troopCosts.Add(TroopClass.Warrior, warriorCost);
         troopCosts.Add(TroopClass.Archer, archerCost);

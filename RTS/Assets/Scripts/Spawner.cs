@@ -73,7 +73,7 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        spawnRandTroop();
+       // spawnRandTroop();
 
     }
     public void spawnGatherer()

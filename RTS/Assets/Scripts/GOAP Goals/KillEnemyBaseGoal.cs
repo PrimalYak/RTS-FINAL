@@ -12,6 +12,7 @@ public class KillEnemyBaseGoal : GoapGoal
 
     public override void UpdateMultiplier(DataSet data)
     {
+        
         // fancy function that lowers the multiplier if another player kills this AI often
     }
 }

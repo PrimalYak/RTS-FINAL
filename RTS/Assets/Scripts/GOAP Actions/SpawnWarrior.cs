@@ -12,18 +12,17 @@ namespace SwordGC.AI.Actions
         private PlayerGOAPAI player2ScriptAI;
         private Spawner spawner;
         public WorldStateUpdater WSU;
-        TroopClass troopClass = TroopClass.Warrior;
+        public TroopClass troopClass = TroopClass.Warrior;
         public float costToApply;
+        public string targetName = "Player2";
+        public TaskExecutor taskExecutor;
 
         void Start()
         {
-            scene = GameObject.FindWithTag("GameManager").GetComponent<SceneBuilder>();
-            GameObject player2 = GameObject.FindWithTag("Player2");
-            player2ScriptAI = player2.GetComponent<PlayerGOAPAI>();
-            spawner = scene.base2.GetComponent<Spawner>();
-            WSU = player2.GetComponent<WorldStateUpdater>();
-            costToApply = (scene.troopCosts[troopClass]) - (WSU.classCounts[(int)troopClass]);
-            Debug.Log("Cost to apply ::: " + costToApply);
+            
+            
+           
+            
 
         }
         public SpawnWarrior(GoapAgent agent) : base(agent)
@@ -34,8 +33,13 @@ namespace SwordGC.AI.Actions
             preconditions.Add(Effects.HAS_SUFFICIENT_GOLD_WARRIOR, true);
 
             requiredRange = 1000f;
-            
-            cost = costToApply;
+
+            this.targetString = targetName;
+         
+
+            //costToApply = taskExecutor.scene.troopCosts[troopClass] - taskExecutor.WSU.classCounts[(int)troopClass];
+
+            cost = 2;
 
 
         }
@@ -49,8 +53,10 @@ namespace SwordGC.AI.Actions
         }
         public override void Perform()
         {
-            Debug.Log("SPAWN WARRIOR ACTION RUNNING");
-            spawner.purchaseUnit(TroopClass.Warrior);
+           
+            taskExecutor = target.GetComponent<TaskExecutor>();
+            cost = taskExecutor.scene.troopCosts[troopClass] - taskExecutor.WSU.classCounts[(int)troopClass];
+            taskExecutor.tryPurchaseUnit(troopClass);
         }
 
         public override GoapAction Clone()

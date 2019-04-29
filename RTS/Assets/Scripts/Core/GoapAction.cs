@@ -505,6 +505,8 @@ namespace SwordGC.AI.Goap
             public const string ALLIES_ALIVE                 = "AlliesAlive";
             public const string ENEMIES_ALIVE                = "EnemiesAlive";
             public const string RESOURCES_TO_GATHER          = "ResourcesToGather";
+            public const string ENEMIES_NEAR_BASE            = "EnemiesNearBase";
+
 
         }
     }

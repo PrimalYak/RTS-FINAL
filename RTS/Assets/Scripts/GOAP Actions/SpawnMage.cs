@@ -13,19 +13,15 @@ namespace SwordGC.AI.Actions
 
         private Spawner spawner;
         public WorldStateUpdater WSU;
-        TroopClass troopClass = TroopClass.Mage;
+        public TroopClass troopClass = TroopClass.Mage;
         public float costToApply;
+        public string targetName = "Player2";
+        public TaskExecutor taskExecutor;
 
 
         void Start()
         {
-            scene = GameObject.FindWithTag("GameManger").GetComponent<SceneBuilder>();
-            GameObject player2 = GameObject.FindWithTag("Player2");
-
-            player2ScriptAI = player2.GetComponent<PlayerGOAPAI>();
-            spawner = scene.base2.GetComponent<Spawner>();
-            WSU = player2ScriptAI.gameObject.GetComponent<WorldStateUpdater>();
-            costToApply = scene.troopCosts[troopClass] - WSU.classCounts[(int)troopClass]; 
+           
 
         }
         public SpawnMage(GoapAgent agent) : base(agent)
@@ -35,14 +31,16 @@ namespace SwordGC.AI.Actions
 
             preconditions.Add(Effects.HAS_SUFFICIENT_GOLD_MAGE, true);
 
-            requiredRange = 0f;
-            cost = costToApply;
+            requiredRange = 1000f;
+            cost = 1;
 
         }
 
         public override void Perform()
         {
-            spawner.purchaseUnit(TroopClass.Mage);
+            taskExecutor = target.GetComponent<TaskExecutor>();
+            cost = taskExecutor.scene.troopCosts[troopClass] - taskExecutor.WSU.classCounts[(int)troopClass];
+            taskExecutor.tryPurchaseUnit(troopClass);
 
         }
 

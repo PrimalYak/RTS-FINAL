@@ -15,7 +15,8 @@ namespace SwordGC.AI.Actions
         public WorldStateUpdater WSU;
         TroopClass troopClass = TroopClass.Archer;
         public float costToApply;
-
+        public string targetName = "Player2";
+        public TaskExecutor taskExecutor;
 
         void Start()
         {
@@ -35,14 +36,16 @@ namespace SwordGC.AI.Actions
             preconditions.Add(Effects.HAS_SUFFICIENT_GOLD_ARCHER, true);
 
 
-            requiredRange = 0f;
-            cost = costToApply;
+            requiredRange = 1000f;
+            cost = 1;
 
         }
 
         public override void Perform()
         {
-            spawner.purchaseUnit(TroopClass.Archer);
+            taskExecutor = target.GetComponent<TaskExecutor>();
+            cost = taskExecutor.scene.troopCosts[troopClass] - taskExecutor.WSU.classCounts[(int)troopClass];
+            taskExecutor.tryPurchaseUnit(troopClass);
 
         }
 

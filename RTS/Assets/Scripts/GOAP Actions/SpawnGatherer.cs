@@ -15,17 +15,13 @@ namespace SwordGC.AI.Actions
         public WorldStateUpdater WSU;
         TroopClass troopClass = TroopClass.Gatherer;
         public float costToApply;
+        public string targetName = "Player2";
+        public TaskExecutor taskExecutor;
 
 
         void Start()
         {
-            scene = GameObject.FindWithTag("GameManger").GetComponent<SceneBuilder>();
-            GameObject player2 = GameObject.FindWithTag("Player2");
-
-            player2ScriptAI = player2.GetComponent<PlayerGOAPAI>();
-            spawner = scene.base2.GetComponent<Spawner>();
-            WSU = player2.GetComponent<WorldStateUpdater>();
-            costToApply = scene.troopCosts[troopClass];
+            
 
         }
         public SpawnGatherer(GoapAgent agent) : base(agent)
@@ -36,16 +32,17 @@ namespace SwordGC.AI.Actions
             preconditions.Add(Effects.HAS_SUFFICIENT_GOLD_GATHERER, true);
             preconditions.Add(Effects.RESOURCES_TO_GATHER, true);
 
-            requiredRange = 0f;
-            cost = costToApply;
+            requiredRange = 1000f;
+            cost = 1;
 
 
         }
 
         public override void Perform()
         {
-            spawner.purchaseUnit(TroopClass.Gatherer);
-
+            taskExecutor = target.GetComponent<TaskExecutor>();
+            cost = taskExecutor.scene.troopCosts[troopClass] - 10;
+            taskExecutor.tryPurchaseUnit(troopClass);
         }
 
         public override GoapAction Clone()

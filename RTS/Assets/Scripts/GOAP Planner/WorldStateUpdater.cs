@@ -14,22 +14,30 @@ public class WorldStateUpdater : MonoBehaviour
     public List<GameObject> Units;
     private List<GameObject> enemiesCloseToBase;
     private List<GameObject> alliesCloseToBase;
+    private float baseProximitySize = 5f;
     public SceneBuilder scene;
-    private TeamNumber thisTeamNumber;
-    private PlayerGOAPAI player2AI;
-    private GoapAction goapAction;
-    private Spawner spawner;
+    public TeamNumber thisTeamNumber = TeamNumber.t2;
+    public LayerMask enemiesLayer;
+    public PlayerGOAPAI player2AI;
+    public GoapAction goapAction;
+    public Spawner spawner;
     public int[] classCounts;
     
 
     void Start()
     {
         scene = GameObject.FindWithTag("GameManager").GetComponent<SceneBuilder>();
-        thisTeamNumber = GetComponent<PlayerGOAPAI>().teamNumber;
+        // thisTeamNumber = GetComponent<PlayerGOAPAI>().teamNumber;
+        thisTeamNumber = TeamNumber.t2;
+        Debug.Log("WSU Team NUmber: " + thisTeamNumber);
         player2AI = GetComponent<PlayerGOAPAI>();
         spawner = scene.base2.GetComponent<Spawner>();
+        Debug.Log("WSU spawner assigned" + spawner);
         classCounts = new int[scene.unitPrefabs.Length];
-       // goapAction = GetComponent<GoapAction>();
+        enemiesCloseToBase = new List<GameObject>();
+        alliesCloseToBase = new List<GameObject>();
+
+        // goapAction = GetComponent<GoapAction>();
 
     }
 
@@ -38,6 +46,7 @@ public class WorldStateUpdater : MonoBehaviour
     {
         updateResources();
         updateTroopsList();
+        drawBaseProximity();
         checkConditionsSatisfied();
     }
     public void updateResources()
@@ -53,6 +62,39 @@ public class WorldStateUpdater : MonoBehaviour
         orderEnemiesByDistanceToBase();
         updateClassCounts();
     }
+    public bool areEnemiesNearBase()
+    {
+        drawBaseProximity();
+        Debug.Log("Number of enemies near base" + enemiesCloseToBase.Count);
+        Debug.Log("Number of allies near base" + alliesCloseToBase.Count);
+
+        if (enemiesCloseToBase.Count > 0) return true;
+        else return false;
+    }
+    private void drawBaseProximity()
+    {
+        Collider2D[] enemyColsCloseToBase = null;
+        alliesCloseToBase.Clear();
+        enemiesCloseToBase.Clear();
+        enemyColsCloseToBase = Physics2D.OverlapCircleAll(spawner.gameObject.transform.position, baseProximitySize, enemiesLayer);
+        foreach (Collider2D enemyCol in enemyColsCloseToBase)
+        {
+            if (enemyCol.gameObject.GetComponent<Unit>() != null)
+            {
+                Unit unitScript = enemyCol.gameObject.GetComponent<Unit>();
+                if ((unitScript.ThisTeamNumber == thisTeamNumber))// && (!alliesCloseToBase.Contains(unitScript.gameObject)))
+                    alliesCloseToBase.Add(enemyCol.gameObject);
+                else if ((unitScript.ThisTeamNumber != thisTeamNumber))// && (!enemiesCloseToBase.Contains(unitScript.gameObject)))
+                    enemiesCloseToBase.Add(enemyCol.gameObject);
+            }
+        }
+        orderBaseProxList();
+    }
+    private void orderBaseProxList()
+    {
+        enemiesCloseToBase.Sort(SortByDistanceToBaseHub);
+    }
+   
     private void updateClassCounts()
     {
         foreach (GameObject unit in enemyTroops)
@@ -74,8 +116,11 @@ public class WorldStateUpdater : MonoBehaviour
             TeamNumber unitTeamNumber =  unitGO.GetComponent<Unit>().ThisTeamNumber;
             if (thisTeamNumber == unitTeamNumber) allyTroops.Add(unitGO);
             else if (thisTeamNumber != unitTeamNumber) enemyTroops.Add(unitGO);
+            Debug.Log("Unit : " + unitGO + " Unit TeamNumber : " + unitTeamNumber + " WSU teamNumber " + thisTeamNumber);
 
         }
+        Debug.Log("Ally Troops : " + allyTroops.Count);
+        Debug.Log("Enemy Troops" + enemyTroops.Count);
     }
     public void checkConditionsSatisfied()
     {
@@ -100,6 +145,9 @@ public class WorldStateUpdater : MonoBehaviour
 
         if (scene.getPlayerGoldCountsArray()[(int)TeamNumber.t2-1] > scene.troopCosts[TroopClass.Gatherer]) player2AI.setEffectGathererCost(true);
         else player2AI.setEffectGathererCost(false);
+
+        if (enemiesCloseToBase.Count > 0) player2AI.setEffectEnemiesNearBase(true);
+        else player2AI.setEffectEnemiesNearBase(false);
 
 
     }

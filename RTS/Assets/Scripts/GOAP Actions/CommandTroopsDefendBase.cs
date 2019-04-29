@@ -5,26 +5,27 @@ using UnityEngine;
 
 namespace SwordGC.AI.Actions
 {
-    public class CommandTroopAttackEnemyBase : GoapAction
+    public class CommandTroopDefendHomeBase : GoapAction
     {
         public string targetName = "Player2";
         public TaskExecutor taskExecutor;
         public WorldStateUpdater WSU;
 
-        public CommandTroopAttackEnemyBase(GoapAgent agent) : base(agent)
+        public CommandTroopDefendHomeBase(GoapAgent agent) : base(agent)
         {
-            goal = GoapGoal.Goals.KILL_ENEMY_BASE;
+            goal = GoapGoal.Goals.DEFEND_HOME_BASE;
 
             preconditions.Add(Effects.ALLIES_ALIVE, true);
-            preconditions.Add(Effects.ENEMIES_ALIVE , false);
-            
+            preconditions.Add(Effects.ENEMIES_NEAR_BASE, true);
+           
+
 
             requiredRange = 1000f;
             targetString = targetName;
 
             cost = 5;
 
-            
+
         }
 
         public override void Perform()
@@ -41,7 +42,7 @@ namespace SwordGC.AI.Actions
 
         public override GoapAction Clone()
         {
-            return new CommandTroopAttackEnemyBase(agent).SetClone(originalObjectGUID);
+            return new CommandTroopDefendHomeBase(agent).SetClone(originalObjectGUID);
         }
     }
 }

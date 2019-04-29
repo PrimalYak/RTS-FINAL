@@ -18,11 +18,11 @@ public class PlayerGOAPAI : GoapAgent
         WSU = GetComponent<WorldStateUpdater>();
         // create goals
 
-        goals.Add(GoapGoal.Goals.DEFEND_HOME_BASE, new DefendBaseGoal(GoapGoal.Goals.DEFEND_HOME_BASE, 1f - (0.5f * 1)));
+        goals.Add(GoapGoal.Goals.DEFEND_HOME_BASE, new DefendBaseGoal(GoapGoal.Goals.DEFEND_HOME_BASE, 1f));
         
-        goals.Add(GoapGoal.Goals.KILL_ENEMY_BASE, new KillEnemyBaseGoal(GoapGoal.Goals.KILL_ENEMY_BASE, 1f - (0.5f * 1)));
+        goals.Add(GoapGoal.Goals.KILL_ENEMY_BASE, new KillEnemyBaseGoal(GoapGoal.Goals.KILL_ENEMY_BASE, 1f));
 
-        goals.Add(GoapGoal.Goals.SPAWN_TROOPS, new SpawnTroops(GoapGoal.Goals.SPAWN_TROOPS, 1f - (0.5f * 1)));
+        goals.Add(GoapGoal.Goals.SPAWN_TROOPS, new SpawnTroops(GoapGoal.Goals.SPAWN_TROOPS, 1f));
 
         // create Actions
 
@@ -34,11 +34,13 @@ public class PlayerGOAPAI : GoapAgent
             dataSet.SetData(GoapAction.Effects.ALLIES_ALIVE, false);
             dataSet.SetData(GoapAction.Effects.ENEMIES_ALIVE, false);
             dataSet.SetData(GoapAction.Effects.RESOURCES_TO_GATHER, false);
+            dataSet.SetData(GoapAction.Effects.ENEMIES_NEAR_BASE, false);
 
 
 
-            possibleActions.Add(new SpawnTroopAction(this));
-            possibleActions.Add(new WaitForGoldAction(this));
+
+        possibleActions.Add(new SpawnTroopAction(this));
+            //possibleActions.Add(new WaitForGoldAction(this));
             possibleActions.Add(new SpawnWarrior(this));
             possibleActions.Add(new SpawnArcher(this));
             possibleActions.Add(new SpawnMage(this));
@@ -77,6 +79,11 @@ public class PlayerGOAPAI : GoapAgent
     public void setEffectResourcesToGather(bool hasGold)
     {
         dataSet.SetData(GoapAction.Effects.RESOURCES_TO_GATHER, hasGold);
+    }
+    public void setEffectEnemiesNearBase(bool enemiesNear)
+    {
+        dataSet.SetData(GoapAction.Effects.ENEMIES_NEAR_BASE, enemiesNear);
+
     }
 
 }
