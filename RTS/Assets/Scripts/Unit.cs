@@ -110,7 +110,7 @@ public abstract class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        updateClosestEnemyTroopsList();
+        
         updateBounds();
 
     }
@@ -122,7 +122,7 @@ public abstract class Unit : MonoBehaviour
     public virtual void updateClosestEnemyTroopsList()
     {
         closestEnemyTroops.Clear();
-
+        Debug.Log("Sb Troops List Count :::" + Sb.getTroopsList().Count);
         foreach (GameObject unit in Sb.getTroopsList())
         {
             if (unit.GetComponent<Unit>() != null)
@@ -257,6 +257,7 @@ public abstract class Unit : MonoBehaviour
     }
     public virtual List<GameObject> getClosestEnemyTroop()
     {
+        updateClosestEnemyTroopsList();
         return closestEnemyTroops;
     }
     public virtual TeamNumber getThisTeamNumber()

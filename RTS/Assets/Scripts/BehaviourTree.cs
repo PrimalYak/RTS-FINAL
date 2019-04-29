@@ -140,18 +140,19 @@ public class BehaviourTree : MonoBehaviour
 
             if (unitScript.isTroop()) // Is a Troop
             {
-                Debug.Log("IS TROOP :: : : ");
+                //Debug.Log("IS TROOP :: : : ");
                 TroopScript troop = unitGO.GetComponent<TroopScript>();
                 bool targetFound = false;
                 if(enemyTroopsAlive())
                 {
                     foreach (GameObject enemyGO in unitScript.getClosestEnemyTroop())
                     {
+                        Debug.Log("BT closestEnemy Troop Count " + unitScript.getClosestEnemyTroop().Count);
                         Unit enemyUnitScript = enemyGO.GetComponent<Unit>();
                         if ((enemyUnitScript.CurrentTroopClass == sb.getMatchups()[unitScript.CurrentTroopClass]) || (enemyUnitScript.CurrentTroopClass == TroopClass.Gatherer))
                         {
                             //unitScript.updateClosestEnemyTroopsList();
-                            troop.setGoal(enemyGO);
+                            troop.moveToGoal(enemyGO);
                             targetFound = true;
                             Task.current.Succeed();
                             break;
@@ -161,7 +162,8 @@ public class BehaviourTree : MonoBehaviour
                     }
                     if (targetFound == false)
                     {
-                        troop.setGoal(unitScript.EnemySpawner.gameObject);
+                        troop.moveToGoal(unitScript.EnemySpawner.gameObject);
+                        
                     }
                 }
                 else

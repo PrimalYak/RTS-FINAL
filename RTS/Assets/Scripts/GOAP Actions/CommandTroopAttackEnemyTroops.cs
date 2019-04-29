@@ -30,11 +30,40 @@ namespace SwordGC.AI.Actions
         public override void Perform()
         {
             WSU = target.GetComponent<WorldStateUpdater>();
+            SceneBuilder scene = WSU.scene;
+            Debug.Log("SceneBuilder" + scene);
+
             foreach(GameObject ally in WSU.allyTroops)
             {
-                Unit unitScript = ally.GetComponent<Unit>();
-                Debug.Log("Closest enemy troop : " + unitScript.getClosestEnemyTroop().First());
-                unitScript.moveToGoal(unitScript.getClosestEnemyTroop().First());
+                if (ally.GetComponent<TroopScript>() != null)
+                {
+                    bool targetSet = false;
+                    Unit unitScript = ally.GetComponent<TroopScript>();
+                    Debug.Log("Closest Enemies : " + unitScript.getClosestEnemyTroop().Count);
+                    foreach (GameObject enemyGO in unitScript.getClosestEnemyTroop())
+                    {
+                        Unit enemyUnitScript = enemyGO.GetComponent<Unit>();
+                        Debug.Log("Enemy Script: " + enemyUnitScript);
+                        if ((enemyUnitScript.CurrentTroopClass == scene.getMatchups()[unitScript.CurrentTroopClass]) || (enemyUnitScript.CurrentTroopClass == TroopClass.Gatherer))
+                        {
+                            //unitScript.updateClosestEnemyTroopsList();
+                            Debug.Log("Unit about to move!");
+                            unitScript.moveToGoal(enemyGO);
+                            targetSet = true;
+                            break;
+
+                        }
+
+                    }
+                    if (targetSet == false)
+                    {
+                        
+                       unitScript.moveToGoal(unitScript.getClosestEnemyTroop().First());
+                       targetSet = true;
+                        
+                        
+                    }
+                }
             }
         }
 
