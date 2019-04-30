@@ -3210,6 +3210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 672137631}
   - component: {fileID: 672137632}
+  - component: {fileID: 672137633}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -3250,12 +3251,14 @@ MonoBehaviour:
   p1EnemyTroopsCount: {fileID: 387636443}
   p2EnemyTroopsCount: {fileID: 374185768}
   troopCount: {fileID: 1135089847}
+  gameLength: 0
   base1: {fileID: 1861076060}
   base2: {fileID: 1762891684}
   bases: []
   resourceGameObject: {fileID: 2884686499437081703, guid: 3b735fdc5f0a35a4b818956e62b4a517,
     type: 3}
   resource: {fileID: 0}
+  numberOfPlayers: 2
   bt: {fileID: 0}
   goldTimer: 10
   unitPrefabs:
@@ -3274,6 +3277,18 @@ MonoBehaviour:
   xMax: 10
   yMin: -5
   yMax: 5
+--- !u!114 &672137633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672137630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8885bbb4ad999b447a5bb53e24280657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &782214613
 GameObject:
   m_ObjectHideFlags: 0

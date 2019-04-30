@@ -96,8 +96,16 @@ public class Spawner : MonoBehaviour
         {
 
             Destroy(gameObject);
+
             if (thisteamNumber == TeamNumber.t1) ResultLogger.setPlayerWinnerNumber(TeamNumber.t2);
             if (thisteamNumber == TeamNumber.t2) ResultLogger.setPlayerWinnerNumber(TeamNumber.t1);
+
+            Debug.Log("Result Loggggeeedd");
+            ResultLogger.logGameTime(scene.gameLength);
+            ResultLogger.logAllDataToFile();
+           
+
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         }

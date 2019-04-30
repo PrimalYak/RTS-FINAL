@@ -145,7 +145,7 @@ public class BehaviourTree : MonoBehaviour
                 bool targetFound = false;
                 if(enemyTroopsAlive())
                 {
-                    foreach (GameObject enemyGO in unitScript.getClosestEnemyTroop())
+                    foreach (GameObject enemyGO in unitScript.getClosestEnemyTroopWithoutUpdate())
                     {
                         Debug.Log("Behaviour Tree closestEnemy Troop Count " + unitScript.getClosestEnemyTroopWithoutUpdate().Count);
 

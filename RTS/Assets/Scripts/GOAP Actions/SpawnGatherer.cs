@@ -43,6 +43,7 @@ namespace SwordGC.AI.Actions
         public override void Perform()
         {
             taskExecutor = target.GetComponent<TaskExecutor>();
+            WSU = target.GetComponent<WorldStateUpdater>();
             int enemyTroopCount = WSU.enemyTroops.Count * 2;
             int enemyCloseToBaseCost = WSU.enemiesCloseToBase.Count * 5;
 

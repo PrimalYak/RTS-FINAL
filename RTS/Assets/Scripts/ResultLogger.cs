@@ -17,25 +17,38 @@ public class ResultLogger
     public static SceneBuilder scene;
     public static TeamNumber playerNumberWinner;
     public static string path;
+    public static string content;
     // Start is called before the first frame update
     void Start()
+    {
+
+
+       
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+    public static void assignLoggerVariables()
+    {
+        scene = GameObject.FindWithTag("GameManager").GetComponent<SceneBuilder>();
+        playerXGoldNodesGathered = new int[scene.numberOfPlayers];
+        playerXEnemiesKilled = new int[scene.numberOfPlayers];
+    }
+    public static void tryCreateFile()
     {
         path = Application.dataPath + "/gameAnalytics.txt";
         if (!File.Exists(path))
         {
             File.WriteAllText(path, "Analytics file \n\n");
         }
-
-        scene = GameObject.FindWithTag("GameManager").GetComponent<SceneBuilder>();
-        playerXGoldNodesGathered = new int[scene.numberOfPlayers];
     }
-
-    // Update is called once per frame
-    void Update()
+    public static void logGameTime(float _gameLength)
     {
-        updateGameTime();
+        gameLength = _gameLength;
     }
-
     public static void updateFPSStats()
     {
         avgFPS = GraphyManager.Instance.AverageFPS;
@@ -59,7 +72,7 @@ public class ResultLogger
     {
         updateFPSStats();
 
-        string serializedData =
+          content =
         "PlayerNumberWinner, " + playerNumberWinner.ToString() + "\n" +
         "MinFPS, " + minFPS.ToString() + "\n" +
         "AvgFPS, " + avgFPS.ToString() + "\n" +
@@ -75,7 +88,7 @@ public class ResultLogger
 
 
 
-        return serializedData;
+        return content;
     }
     public static void resetAllLoggedVariables()
     {
@@ -83,11 +96,11 @@ public class ResultLogger
     }
     public static void addGoldNodeGatherer(TeamNumber teamNumber)
     {
-        playerXGoldNodesGathered[(int)teamNumber - 1]++;
+        playerXGoldNodesGathered[(int)teamNumber-1]++;
     }
     public static void addEnemiesKilled(TeamNumber teamNumber)
     {
-        playerXEnemiesKilled[(int)teamNumber - 1]++;
+        playerXEnemiesKilled[(int)teamNumber-1]++;
     }
     public static void logAllDataToFile()
     {

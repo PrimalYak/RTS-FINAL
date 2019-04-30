@@ -12,6 +12,7 @@ public class SceneBuilder : MonoBehaviour {
     public Text p1EnemyTroopsCount;
     public Text p2EnemyTroopsCount;
     public Text troopCount;
+    public float gameLength = 0f;
 
     public GameObject base1;
     public GameObject base2;
@@ -86,8 +87,8 @@ public class SceneBuilder : MonoBehaviour {
     {
         bt = GameObject.FindWithTag("Player1").GetComponent<BehaviourTree>();
         resource = resourceGameObject.GetComponent<Resource>();
-
-        
+        ResultLogger.assignLoggerVariables();
+        ResultLogger.tryCreateFile();
 
 
         p1GoldCount = 0;
@@ -108,18 +109,18 @@ public class SceneBuilder : MonoBehaviour {
         if(Resources.Count<=0)
         {
             spawnResource();
-            Debug.Log("Resources count: " + Resources.Count);
+            //Debug.Log("Resources count: " + Resources.Count);
         }
         if(Troops == null)
         {
-            Debug.Log("Troops list is null");
+            //Debug.Log("Troops list is null");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        gameLength += Time.deltaTime;
        // GameObject[] TroopsArray = GameObject.FindGameObjectsWithTag("Troop");
       //  Troops.AddRange(TroopsArray);
 
@@ -148,8 +149,8 @@ public class SceneBuilder : MonoBehaviour {
     }
     public bool canAffordTroop(TeamNumber teamNumber,TroopClass troopClass)
     {
-        Debug.Log("Team Number : " + ((int)teamNumber));
-        Debug.Log("TroopClass  : " + ((int)troopClass));
+        //Debug.Log("Team Number : " + ((int)teamNumber));
+       // Debug.Log("TroopClass  : " + ((int)troopClass));
         int playerGold = playerGoldCounts[(int)teamNumber - 1];
         int troopCost = troopCosts[troopClass];
 

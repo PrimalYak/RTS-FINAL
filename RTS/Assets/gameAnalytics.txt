@@ -1,0 +1,42 @@
+Analytics file 
+
+
+PlayerNumberWinner, t2
+MinFPS, 28.18892
+AvgFPS, 53.71419
+MaxFPS, 62.17554
+GameLength, 0
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 0
+player1EnemiesKilled, 1
+player2EnemiesKilled, 0
+
+PlayerNumberWinner, t2
+MinFPS, 40.25351
+AvgFPS, 58.57731
+MaxFPS, 62.46447
+GameLength, 0
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 0
+player1EnemiesKilled, 1
+player2EnemiesKilled, 0
+
+PlayerNumberWinner, t1
+MinFPS, 7.022829
+AvgFPS, 13.2796
+MaxFPS, 13.32389
+GameLength, 0
+player1GoldNodesGathered, 3
+player2GoldNodesGathered, 2
+player1EnemiesKilled, 8
+player2EnemiesKilled, 3
+
+PlayerNumberWinner, t1
+MinFPS, 6.729713
+AvgFPS, 8.787292
+MaxFPS, 14.38005
+GameLength, 166.4167
+player1GoldNodesGathered, 2
+player2GoldNodesGathered, 0
+player1EnemiesKilled, 25
+player2EnemiesKilled, 5

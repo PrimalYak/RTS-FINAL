@@ -289,7 +289,7 @@ public class GatherersAI : Unit
             getSceneBuilder().setPlayerGoldCount(getSceneBuilder().getPlayerGoldCountsArray()[(int)ThisTeamNumber - 1],carriedResourceValue);
             carriedResourceValue = 0;
             //Debug.Log("Resource deposited");]
-            Debug.Log(base.ThisTeamNumber);
+            //Debug.Log(base.ThisTeamNumber);
             ResultLogger.addGoldNodeGatherer(base.ThisTeamNumber);
             gState = GathererState.Idle;
            // searchForResource();        

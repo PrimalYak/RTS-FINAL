@@ -67,8 +67,8 @@ public class WorldStateUpdater : MonoBehaviour
     public bool areEnemiesNearBase()
     {
         drawBaseProximity();
-        Debug.Log("Number of enemies near base" + enemiesCloseToBase.Count);
-        Debug.Log("Number of allies near base" + alliesCloseToBase.Count);
+        //Debug.Log("Number of enemies near base" + enemiesCloseToBase.Count);
+        //Debug.Log("Number of allies near base" + alliesCloseToBase.Count);
 
         if (enemiesCloseToBase.Count > 0) return true;
         else return false;
@@ -99,6 +99,8 @@ public class WorldStateUpdater : MonoBehaviour
    
     private void updateClassCounts()
     {
+        classCounts = null;
+        classCounts = new int[scene.unitPrefabs.Length];
         foreach (GameObject unit in enemyTroops)
         {
             TroopClass troopClass = TroopClass.Gatherer;
@@ -118,11 +120,11 @@ public class WorldStateUpdater : MonoBehaviour
             TeamNumber unitTeamNumber =  unitGO.GetComponent<Unit>().ThisTeamNumber;
             if (thisTeamNumber == unitTeamNumber) allyTroops.Add(unitGO);
             else if (thisTeamNumber != unitTeamNumber) enemyTroops.Add(unitGO);
-            Debug.Log("Unit : " + unitGO + " Unit TeamNumber : " + unitTeamNumber + " WSU teamNumber " + thisTeamNumber);
+            //Debug.Log("Unit : " + unitGO + " Unit TeamNumber : " + unitTeamNumber + " WSU teamNumber " + thisTeamNumber);
 
         }
-        Debug.Log("Ally Troops : " + allyTroops.Count);
-        Debug.Log("Enemy Troops" + enemyTroops.Count);
+        //Debug.Log("Ally Troops : " + allyTroops.Count);
+        //Debug.Log("Enemy Troops" + enemyTroops.Count);
     }
     public void checkConditionsSatisfied()
     {
@@ -163,4 +165,5 @@ public class WorldStateUpdater : MonoBehaviour
         float squaredRangeB = (b.transform.position - spawner.gameObject.transform.position).sqrMagnitude;
         return squaredRangeA.CompareTo(squaredRangeB);
     }
+    
 }
