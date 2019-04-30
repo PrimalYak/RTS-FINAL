@@ -4,6 +4,7 @@ using UnityEngine;
 using Pathfinding;
 
 
+
 public enum TroopClass
 {
     Warrior  = 0,
@@ -11,12 +12,14 @@ public enum TroopClass
     Mage     = 2,
     Gatherer = 3
 }
+
+[RequireComponent(typeof(Rigidbody2D))]
 public abstract class Unit : MonoBehaviour
 {
-
+    
     // public Spawner spawner;
 
-    
+
     //[SerializeField] public float speed;
     [SerializeField] public float sightRadius;
     [SerializeField] public float damage;
@@ -26,8 +29,11 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private AIDestinationSetter aIDSetter;
     [SerializeField] private SceneBuilder sb;
     protected GameObject[] baseHubs = null;
+    private AIPath aiPath;
+    public Rigidbody2D rb;
     //public List<GameObject> enemiesInSight = new List<GameObject>();
-  
+
+
 
     protected Vector2 direction;
     private TextMesh healthTextMesh;
@@ -46,6 +52,7 @@ public abstract class Unit : MonoBehaviour
     public Spawner HomeSpawner { get => homeSpawner; set => homeSpawner = value; }
     public Spawner EnemySpawner { get => enemySpawner; set => enemySpawner = value; }
     public TextMesh HealthTextMesh { get => healthTextMesh; set => healthTextMesh = value; }
+    public AIPath AiPath { get => aiPath; set => aiPath = value; }
 
 
 
@@ -62,15 +69,16 @@ public abstract class Unit : MonoBehaviour
         if (CurrentTroopClass != TroopClass.Gatherer) HealthTextMesh = transform.Find("HealthTextMesh").GetComponent<TextMesh>();
         closestEnemyTroops = new List<GameObject>();
         AIDSetter = GetComponent<AIDestinationSetter>();
-
+        AiPath = GetComponent<AIPath>();
         assignBaseHubs();
+        
     }
     void Start()
     {
         
-        
+
         // troopstate = Tstate(0);
-        
+
 
     }
     public void Initialize(TroopClass troopClass, TeamNumber teamNumber)
@@ -161,6 +169,18 @@ public abstract class Unit : MonoBehaviour
     public virtual void moveToGoal(GameObject goalObject)
     {
         //if(goalObject!=null) 
+
+
+        if (ThisTeamNumber == TeamNumber.t1 && rb.velocity.x < 0)
+        {
+            AiPath.maxSpeed = 2;
+        }
+        if (ThisTeamNumber == TeamNumber.t2 && rb.velocity.x > 0)
+        {
+            AiPath.maxSpeed = 2;
+        }
+            Debug.Log("Unit Max Speed: " + AiPath.maxSpeed);
+        
         AIDSetter.target = goalObject.transform;
     }
 
@@ -230,11 +250,10 @@ public abstract class Unit : MonoBehaviour
         if (health <= 0)
         {
             //Debug.Log("Troops length : " + Sb.getTroopsList().Count);
-            for (int i = 0; i < Sb.getTroopsList().Count; i++)
-            {
-                //Debug.Log(Sb.getTroopsList()[i].GetComponent<Unit>().CurrentTroopClass);
-            }
+            
             Sb.destroyTroop(this);
+            if (ThisTeamNumber == TeamNumber.t1) ResultLogger.addEnemiesKilled(TeamNumber.t2);
+            if (ThisTeamNumber == TeamNumber.t2) ResultLogger.addEnemiesKilled(TeamNumber.t1);
             //Debug.Log(CurrentTroopClass + " died");
         }
     }

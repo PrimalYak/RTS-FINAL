@@ -21,7 +21,7 @@ public class SceneBuilder : MonoBehaviour {
 
     private int p1GoldCount;
     private int p2GoldCount;
-    private int numberOfPlayers = 2;
+    public int numberOfPlayers = 2;
 
     private int[] playerGoldCounts;
 

@@ -54,7 +54,9 @@ public class TroopScript : Unit
     void Start()
     {
         //base.assignBaseHubs();
+        base.AiPath = GetComponent<AIPath>();
 
+        base.rb = GetComponent<Rigidbody2D>();
         UnitScript = GetComponent<Unit>();
        // Debug.Log("Unit Script ::: "+ UnitScript);
         CurrentTroopState = TroopState.Idle;
@@ -230,6 +232,7 @@ public class TroopScript : Unit
         else damageToDeal = damage * 2;
 
         unitScript.takeDamage(damageToDeal);
+
          //Debug.Log("Enemy " + unitScript.CurrentTroopClass.ToString() + " taken : " + damageToDeal + " damage");
     }
 

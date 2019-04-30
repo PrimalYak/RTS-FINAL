@@ -43,7 +43,10 @@ namespace SwordGC.AI.Actions
         public override void Perform()
         {
             taskExecutor = target.GetComponent<TaskExecutor>();
-            cost = taskExecutor.scene.troopCosts[troopClass] - WSU.enemyTroops.Count*2 - WSU.enemiesCloseToBase.Count*5;
+            int enemyTroopCount = WSU.enemyTroops.Count * 2;
+            int enemyCloseToBaseCost = WSU.enemiesCloseToBase.Count * 5;
+
+            cost = taskExecutor.scene.troopCosts[troopClass] - enemyTroopCount - enemyCloseToBaseCost;
             taskExecutor.tryPurchaseUnit(troopClass);
         }
 

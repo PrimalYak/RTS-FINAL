@@ -4,7 +4,7 @@ using UnityEngine;
 using Pathfinding;
 using System.Linq;
 
-[RequireComponent(typeof(Rigidbody2D))]
+
 [RequireComponent(typeof(Seeker))]
 
 
@@ -56,6 +56,7 @@ public class GatherersAI : Unit
 
     void Awake()
     {
+        base.AiPath = GetComponent<AIPath>();
         targetNullTimer = startTargetNullTimer;
         idleTimer = startIdleTimer;
        
@@ -63,7 +64,7 @@ public class GatherersAI : Unit
         ThisTeamNumber = base.ThisTeamNumber;
        
         closestResources = new List<GameObject>();
-
+        base.rb = GetComponent<Rigidbody2D>();
     }
     void Start()
     {
@@ -155,7 +156,7 @@ public class GatherersAI : Unit
     public bool getUpdatedClosestResources()
     {
         //Debug.Log(getSceneBuilder());
-        Debug.Log("Resources list: " + getSceneBuilder().getResourcesList());
+        Debug.Log("Resources list: " + getSceneBuilder().getResourcesList().Count);
         if (getSceneBuilder().getResourcesList() != null)
         {
             closestResources.Clear();
@@ -287,7 +288,9 @@ public class GatherersAI : Unit
             carryingResource = false;
             getSceneBuilder().setPlayerGoldCount(getSceneBuilder().getPlayerGoldCountsArray()[(int)ThisTeamNumber - 1],carriedResourceValue);
             carriedResourceValue = 0;
-            //Debug.Log("Resource deposited");
+            //Debug.Log("Resource deposited");]
+            Debug.Log(base.ThisTeamNumber);
+            ResultLogger.addGoldNodeGatherer(base.ThisTeamNumber);
             gState = GathererState.Idle;
            // searchForResource();        
         }

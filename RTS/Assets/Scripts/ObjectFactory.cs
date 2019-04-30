@@ -30,7 +30,7 @@ public class ObjectFactory : MonoBehaviour
          
         float randSpawnLoc = Random.Range(-(spawner.spawnRange), spawner.spawnRange);
             //Debug.Log("TroopClass of troop about to be spawned is : " + (int)troopClass);
-            unitGO = Instantiate(unitsPrefabs[(int)troopClass], (this.transform.position /*+ new Vector3(0,randSpawnLoc,0)*/), Quaternion.identity) as GameObject;
+            unitGO = Instantiate(unitsPrefabs[(int)troopClass], (this.transform.position + new Vector3(0,randSpawnLoc,0)), Quaternion.identity) as GameObject;
             unitScript = unitGO.GetComponent<Unit>();
             unitScript.Initialize(troopClass, teamNumber);
             scene.subtractUnitCost(troopClass, teamNumber);

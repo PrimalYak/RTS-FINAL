@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using Tayx.Graphy;
 public enum TeamNumber
 {
     t1 = 1, t2 = 2
@@ -95,6 +96,8 @@ public class Spawner : MonoBehaviour
         {
 
             Destroy(gameObject);
+            if (thisteamNumber == TeamNumber.t1) ResultLogger.setPlayerWinnerNumber(TeamNumber.t2);
+            if (thisteamNumber == TeamNumber.t2) ResultLogger.setPlayerWinnerNumber(TeamNumber.t1);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         }
