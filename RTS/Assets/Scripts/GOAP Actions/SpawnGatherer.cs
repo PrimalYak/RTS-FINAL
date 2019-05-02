@@ -31,6 +31,7 @@ namespace SwordGC.AI.Actions
             goal = GoapGoal.Goals.SPAWN_TROOPS;
 
             preconditions.Add(Effects.HAS_SUFFICIENT_GOLD_GATHERER, true);
+            preconditions.Add(Effects.ENEMIES_ALIVE, false);
             preconditions.Add(Effects.RESOURCES_TO_GATHER, true);
 
             requiredRange = 1000f;

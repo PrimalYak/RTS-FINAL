@@ -141,7 +141,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.24, y: 0.24}
+    oldSize: {x: 0.6857143, y: 0.6857143}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 2
-  radius: 0.4
+  radius: 0.3
   height: 0.01
   repathRate: 0.25
   canSearch: 1
@@ -207,7 +207,7 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.2
+  slowdownDistance: 0
   pickNextWaypointDist: 2
   endReachedDistance: 0
   alwaysDrawGizmos: 1
@@ -247,6 +247,7 @@ MonoBehaviour:
   thisTeamNumber: 0
   aIDSetter: {fileID: 0}
   sb: {fileID: 0}
+  rb: {fileID: 0}
   enemiesInSightArray: []
   closestEnemyTroops: []
   damageMultiplier: 2

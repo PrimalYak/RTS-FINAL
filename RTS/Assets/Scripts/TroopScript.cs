@@ -229,7 +229,7 @@ public class TroopScript : Unit
                     break;
             }
         }
-        else damageToDeal = damage * 2;
+        else damageToDeal = (damage * 2) + 1;
 
         unitScript.takeDamage(damageToDeal);
 

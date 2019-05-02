@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 using UnityEngine.SceneManagement;
 using Tayx.Graphy;
 public enum TeamNumber
@@ -24,6 +25,9 @@ public class Spawner : MonoBehaviour
     [HideInInspector] public GameObject base2Prefab;
     [HideInInspector] public SceneBuilder scene;
     [HideInInspector] public ObjectFactory objectFactory;
+    public List<GameObject> allyTroops;
+    
+    public List<GameObject> troops;
 
     [SerializeField] public float spawnRange = 3;
 
@@ -46,16 +50,15 @@ public class Spawner : MonoBehaviour
       //  spawnRandTroop();
        
     }
-    public void spawnRandTroop()
+    public void purchaseRandTroop()
     {
-        // int randTroop = Random.Range(0, troopPrefabs.Length);
-        int randTroop = 0;
-        //troopClass2Spawn = (TroopClass)randTroop;
-        troopClass2Spawn = TroopClass.Gatherer;
-        if (thisteamNumber != TeamNumber.t2)
-        {
+         int randTroop = Random.Range(0, troopPrefabs.Length);
+        //int randTroop = 0;
+        troopClass2Spawn = (TroopClass)randTroop;
+       // troopClass2Spawn = TroopClass.Gatherer;
+        
             purchaseUnit(troopClass2Spawn);
-        }
+        
     }
     public bool purchaseUnit(TroopClass troopClass)
     {
@@ -76,8 +79,50 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-       // spawnRandTroop();
+       // autoPlay(TeamNumber.t2);
 
+    }
+    public void autoPlay(TeamNumber teamNumber)
+    {
+        if(thisteamNumber == teamNumber)
+        {
+            purchaseRandTroop();
+            
+            orderTroops();
+        }
+        
+    }
+    public void getAllies()
+    {
+        Debug.Log("getAllies called");
+        troops.Clear();
+        allyTroops.Clear();
+        troops.AddRange(scene.getTroopsList());
+        foreach(GameObject unit in troops)
+        {
+            if(unit.GetComponent<GatherersAI>() == null)
+            {
+                if (unit.GetComponent<Unit>().ThisTeamNumber == thisteamNumber)
+                {
+                    allyTroops.Add(unit);
+                }
+            }
+        }
+    }
+    public void orderTroops()
+    {
+        getAllies();
+        Debug.Log("OrderTroops called");
+        foreach (GameObject unitGO in allyTroops)
+        {
+            Unit unitScript = unitGO.GetComponent<Unit>();
+
+            if (unitScript.getClosestEnemyTroop().First().GetComponent<Unit>().CurrentTroopClass == scene.matchups[unitScript.CurrentTroopClass])
+            {
+                unitScript.moveToGoal(unitScript.getClosestEnemyTroop().First());
+            }
+            else unitScript.moveToGoal(unitScript.EnemySpawner.gameObject);
+        }
     }
     public void spawnGatherer()
     {
@@ -101,15 +146,22 @@ public class Spawner : MonoBehaviour
             if (thisteamNumber == TeamNumber.t2) ResultLogger.setPlayerWinnerNumber(TeamNumber.t1);
 
             Debug.Log("Result Loggggeeedd");
-            ResultLogger.logGameTime(scene.gameLength);
-            ResultLogger.logAllDataToFile();
-           
+
+            logResultsToLogger();
 
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         }
     }
+
+    public void logResultsToLogger()
+    {
+        ResultLogger.logGameTime(scene.gameLength);
+        ResultLogger.logMaxTroopCount(scene.maxTroopCount);
+        ResultLogger.logAllDataToFile();
+    }
+
     public GameObject MakeTroop(TroopClass _troopClass)
     {
         Spawner spawner = gameObject.GetComponent<Spawner>();

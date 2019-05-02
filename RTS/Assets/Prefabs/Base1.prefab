@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 58669865759847366}
   - component: {fileID: 114204698291981456}
   - component: {fileID: 7951327450675908870}
+  - component: {fileID: 1861076061}
   m_Layer: 0
   m_Name: Base1
   m_TagString: Base
@@ -95,9 +96,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.004112357, y: -0.14371318}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.30788454
+  m_Radius: 0.4
 --- !u!114 &114204698291981456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +127,8 @@ MonoBehaviour:
     type: 3}
   scene: {fileID: 0}
   objectFactory: {fileID: 0}
+  allyTroops: []
+  troops: []
   spawnRange: 3
 --- !u!50 &7951327450675908870
 Rigidbody2D:
@@ -148,3 +151,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1861076061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260972748088420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9176057965225014dba8567a4a49afdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsPrefabs: []
+  spawner: {fileID: 0}
+  scene: {fileID: 0}

@@ -286,7 +286,8 @@ public class GatherersAI : Unit
         else if(other.tag == ("Base") && carryingResource)
         {
             carryingResource = false;
-            getSceneBuilder().setPlayerGoldCount(getSceneBuilder().getPlayerGoldCountsArray()[(int)ThisTeamNumber - 1],carriedResourceValue);
+            getSceneBuilder().addResourceGold(carriedResourceValue, base.ThisTeamNumber);
+            //getSceneBuilder().setPlayerGoldCount(getSceneBuilder().getPlayerGoldCountsArray()[(int)ThisTeamNumber - 1],carriedResourceValue);
             carriedResourceValue = 0;
             //Debug.Log("Resource deposited");]
             //Debug.Log(base.ThisTeamNumber);

@@ -28,10 +28,24 @@ tree("ManageActiveTroops")
 tree("SpawnTroops")
 	
 	fallback
-		tree("SpawnCounter")
-		spawnGatherer()	
+		tree("PurchaseCounter")
+		tree("GatherersAtMax")
+		tree("PurchaseRandom")
+
 		
-tree("SpawnCounter")
+tree("GatherersAtMax")
+	sequence
+		not gatherersAtMax()
+		purchaseGatherer()
+			
+
+tree("PurchaseRandom")
+	random
+			purchaseArcher()
+			purchaseWarrior()
+			purchaseMage()
+
+tree("PurchaseCounter")
 	sequence
 		enemyTroopsAlive()
-		SpawnCounterTroop()
+		purchaseCounterTroop()

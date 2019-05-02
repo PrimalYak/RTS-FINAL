@@ -18,6 +18,7 @@ public class ResultLogger
     public static TeamNumber playerNumberWinner;
     public static string path;
     public static string content;
+    public static int maxTroopCount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +38,7 @@ public class ResultLogger
         playerXGoldNodesGathered = new int[scene.numberOfPlayers];
         playerXEnemiesKilled = new int[scene.numberOfPlayers];
     }
+
     public static void tryCreateFile()
     {
         path = Application.dataPath + "/gameAnalytics.txt";
@@ -45,10 +47,12 @@ public class ResultLogger
             File.WriteAllText(path, "Analytics file \n\n");
         }
     }
+
     public static void logGameTime(float _gameLength)
     {
         gameLength = _gameLength;
     }
+
     public static void updateFPSStats()
     {
         avgFPS = GraphyManager.Instance.AverageFPS;
@@ -81,14 +85,13 @@ public class ResultLogger
         "player1GoldNodesGathered, " + playerXGoldNodesGathered[0].ToString() + "\n" +
         "player2GoldNodesGathered, " + playerXGoldNodesGathered[1].ToString() + "\n" +
         "player1EnemiesKilled, " + playerXEnemiesKilled[0].ToString() + "\n" +
-        "player2EnemiesKilled, " + playerXEnemiesKilled[1].ToString() + "\n";
-
-
-
-
-
-
+        "player2EnemiesKilled, " + playerXEnemiesKilled[1].ToString() + "\n" + 
+        "MaxTroopsCount, " + maxTroopCount.ToString() + "\n";
         return content;
+    }
+    public static void logMaxTroopCount(int _maxTroopCount)
+    {
+        maxTroopCount = _maxTroopCount;
     }
     public static void resetAllLoggedVariables()
     {
@@ -102,10 +105,9 @@ public class ResultLogger
     {
         playerXEnemiesKilled[(int)teamNumber-1]++;
     }
+
     public static void logAllDataToFile()
     {
-
-        //StreamReader reader = new StreamReader("gameAnalytics.txt");
 
         File.AppendAllText(path, "\n" + logStats());
     }

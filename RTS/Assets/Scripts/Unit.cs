@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Pathfinding;
 
@@ -170,18 +171,29 @@ public abstract class Unit : MonoBehaviour
     {
         //if(goalObject!=null) 
 
+        determineSpeed( goalObject);
 
-        if (ThisTeamNumber == TeamNumber.t1 && rb.velocity.x < 0)
-        {
-            AiPath.maxSpeed = 2;
-        }
-        if (ThisTeamNumber == TeamNumber.t2 && rb.velocity.x > 0)
-        {
-            AiPath.maxSpeed = 2;
-        }
-            Debug.Log("Unit Max Speed: " + AiPath.maxSpeed);
+
+       // Debug.Log("Unit Max Speed: " + AiPath.maxSpeed);
         
         AIDSetter.target = goalObject.transform;
+    }
+
+    public void determineSpeed(GameObject goalObject)
+    {
+        if (ThisTeamNumber == TeamNumber.t1)
+        { 
+            if(goalObject.transform.position.x < transform.position.x) AiPath.maxSpeed = Sb.maxSpeedTowardsBase;
+            else AiPath.maxSpeed = Sb.normalMaxSpeed;
+        }
+       
+        if (ThisTeamNumber == TeamNumber.t2)
+        {
+            if (goalObject.transform.position.x > transform.position.x) AiPath.maxSpeed = Sb.maxSpeedTowardsBase;
+            else AiPath.maxSpeed = Sb.normalMaxSpeed;
+        }
+            
+
     }
 
     public virtual void moveToEnemyBase()

@@ -12,7 +12,11 @@ public class SceneBuilder : MonoBehaviour {
     public Text p1EnemyTroopsCount;
     public Text p2EnemyTroopsCount;
     public Text troopCount;
+    public int maxTroopCount = 0;
+
     public float gameLength = 0f;
+    public float maxSpeedTowardsBase = 1.3f;
+    public float normalMaxSpeed = 1f; 
 
     public GameObject base1;
     public GameObject base2;
@@ -32,6 +36,11 @@ public class SceneBuilder : MonoBehaviour {
     public int goldTimer;
     [SerializeField] public GameObject[] unitPrefabs;
     [SerializeField] public int goldIncrement;
+
+    [SerializeField] public int[] playerBonusGold;
+    
+
+
     [SerializeField] public float startResourceSpawnTimer = 5f;
     [SerializeField] public int warriorCost;
     [SerializeField] public int archerCost;
@@ -65,6 +74,7 @@ public class SceneBuilder : MonoBehaviour {
         matchups = new Dictionary<TroopClass, TroopClass>();
         Resources = new List<GameObject>();
         Troops = new List<GameObject>();
+        
 
 
         bases = GameObject.FindGameObjectsWithTag("Base");
@@ -121,10 +131,10 @@ public class SceneBuilder : MonoBehaviour {
     void Update()
     {
         gameLength += Time.deltaTime;
-       // GameObject[] TroopsArray = GameObject.FindGameObjectsWithTag("Troop");
-      //  Troops.AddRange(TroopsArray);
-
-        if(resourceReadyToSpawn())
+        // GameObject[] TroopsArray = GameObject.FindGameObjectsWithTag("Troop");
+        //  Troops.AddRange(TroopsArray);
+        isTroopCountMax();
+        if (resourceReadyToSpawn())
         {
             spawnResource();
         }
@@ -133,7 +143,11 @@ public class SceneBuilder : MonoBehaviour {
         displayGoldCount();
         displayTroopCounts();
     }
-
+    public void isTroopCountMax()
+    {
+        //Debug.Log("maxTroopCount" + maxTroopCount);
+        if (Troops.Count > maxTroopCount) maxTroopCount = Troops.Count;
+    }
     void displayGoldCount()
     {
         p1GoldDisp.text = "Player 1 Gold : " + playerGoldCounts[0].ToString();
@@ -162,7 +176,10 @@ public class SceneBuilder : MonoBehaviour {
     {
         playerGoldCounts[(int)teamNumber - 1] -= troopCosts[troopClass];
     }
-
+    public void addResourceGold(int resourceValue,TeamNumber teamNumber)
+    {
+        playerGoldCounts[(int)teamNumber - 1] +=resourceValue;
+    }
     public bool resourceReadyToSpawn()
     {
         if (resourceSpawnTimer <= 0 && Resources.Count < maxResourceNumber)
@@ -201,11 +218,12 @@ public class SceneBuilder : MonoBehaviour {
 
     void addGold()
     {
-        for (int i = 0; i < playerGoldCounts.Length;i++)
+        for (int i = 0; i < playerGoldCounts.Length; i++)
         {
-            playerGoldCounts[i] += goldIncrement;
+            playerGoldCounts[i] += goldIncrement + playerBonusGold[i];
         }
     }
+    
     public void addResource(GameObject resource)
     {
         Resources.Add(resource);

@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 2079551230866525626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14.26379, y: 3.1509843, z: 0.2200118}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3013269791390401219}
   m_Father: {fileID: 0}
@@ -175,10 +175,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 2
-  radius: 0.2
+  radius: 0.3
   height: 0.01
   repathRate: 0.25
-  canSearch: 1
+  canSearch: 0
   canMove: 1
   maxSpeed: 1
   gravity: {x: 0, y: 0, z: 0}
@@ -191,7 +191,7 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.2
+  slowdownDistance: 0
   pickNextWaypointDist: 1.6
   endReachedDistance: 0
   alwaysDrawGizmos: 1
@@ -247,6 +247,7 @@ MonoBehaviour:
   thisTeamNumber: 0
   aIDSetter: {fileID: 0}
   sb: {fileID: 0}
+  rb: {fileID: 0}
   enemiesInSightArray: []
   closestEnemyTroops: []
   damageMultiplier: 2

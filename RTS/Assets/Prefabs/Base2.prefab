@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 58040335296216742}
   - component: {fileID: 114509631606736788}
   - component: {fileID: 3800226596844598460}
+  - component: {fileID: 1762891685}
   m_Layer: 0
   m_Name: Base2
   m_TagString: Base
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 8c69f3cd16f534bec8236a6484f500d4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 87211f2bb9ac9954da664f12d4b86954, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,9 +96,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.19604473}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.22063392
+  m_Radius: 0.4
 --- !u!114 &114509631606736788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +126,9 @@ MonoBehaviour:
     type: 3}
   base2Prefab: {fileID: 1576233540946356}
   scene: {fileID: 0}
+  objectFactory: {fileID: 0}
+  allyTroops: []
+  troops: []
   spawnRange: 3
 --- !u!50 &3800226596844598460
 Rigidbody2D:
@@ -147,3 +151,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1762891685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576233540946356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9176057965225014dba8567a4a49afdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsPrefabs: []
+  spawner: {fileID: 0}
+  scene: {fileID: 0}

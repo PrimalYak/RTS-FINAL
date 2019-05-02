@@ -40,3 +40,112 @@ player1GoldNodesGathered, 2
 player2GoldNodesGathered, 0
 player1EnemiesKilled, 25
 player2EnemiesKilled, 5
+
+PlayerNumberWinner, t1
+MinFPS, 8.755896
+AvgFPS, 14.23481
+MaxFPS, 25.54628
+GameLength, 51.06452
+player1GoldNodesGathered, 3
+player2GoldNodesGathered, 2
+player1EnemiesKilled, 6
+player2EnemiesKilled, 4
+
+PlayerNumberWinner, t1
+MinFPS, 22.18705
+AvgFPS, 37.6803
+MaxFPS, 42.57921
+GameLength, 36.39601
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 4
+player1EnemiesKilled, 3
+player2EnemiesKilled, 3
+MaxTroopsCount, 0
+
+PlayerNumberWinner, t1
+MinFPS, 26.01818
+AvgFPS, 39.97612
+MaxFPS, 45.41246
+GameLength, 29.83954
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 0
+player1EnemiesKilled, 2
+player2EnemiesKilled, 2
+MaxTroopsCount, 0
+
+PlayerNumberWinner, t2
+MinFPS, 34.73144
+AvgFPS, 58.23523
+MaxFPS, 62.79048
+GameLength, 69.29017
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 0
+player1EnemiesKilled, 5
+player2EnemiesKilled, 5
+MaxTroopsCount, 0
+
+PlayerNumberWinner, t1
+MinFPS, 40.31974
+AvgFPS, 58.61321
+MaxFPS, 62.9794
+GameLength, 29.8544
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 3
+player1EnemiesKilled, 3
+player2EnemiesKilled, 1
+MaxTroopsCount, 7
+
+PlayerNumberWinner, t1
+MinFPS, 21.79954
+AvgFPS, 40.12438
+MaxFPS, 45.79699
+GameLength, 29.8678
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 1
+player1EnemiesKilled, 2
+player2EnemiesKilled, 1
+MaxTroopsCount, 5
+
+PlayerNumberWinner, t1
+MinFPS, 26.34691
+AvgFPS, 41.74428
+MaxFPS, 50.7136
+GameLength, 49.92512
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 0
+player1EnemiesKilled, 4
+player2EnemiesKilled, 3
+MaxTroopsCount, 4
+
+PlayerNumberWinner, t1
+MinFPS, 22.34124
+AvgFPS, 57.47742
+MaxFPS, 62.68713
+GameLength, 29.79692
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 1
+player1EnemiesKilled, 2
+player2EnemiesKilled, 1
+MaxTroopsCount, 5
+
+PlayerNumberWinner, t2
+MinFPS, 27.22881
+AvgFPS, 35.6864
+MaxFPS, 59.35082
+GameLength, 39.61092
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 0
+player1EnemiesKilled, 2
+player2EnemiesKilled, 3
+MaxTroopsCount, 4
+
+PlayerNumberWinner, t1
+MinFPS, 8.354618
+AvgFPS, 24.3881
+MaxFPS, 40.98871
+GameLength, 29.77659
+player1GoldNodesGathered, 0
+player2GoldNodesGathered, 1
+player1EnemiesKilled, 2
+player2EnemiesKilled, 1
+MaxTroopsCount, 5

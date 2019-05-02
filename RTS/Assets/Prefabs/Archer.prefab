@@ -207,7 +207,7 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.2
+  slowdownDistance: 0
   pickNextWaypointDist: 1.6
   endReachedDistance: 0
   alwaysDrawGizmos: 1
@@ -247,6 +247,7 @@ MonoBehaviour:
   thisTeamNumber: 0
   aIDSetter: {fileID: 0}
   sb: {fileID: 0}
+  rb: {fileID: 0}
   enemiesInSightArray: []
   closestEnemyTroops: []
   damageMultiplier: 2

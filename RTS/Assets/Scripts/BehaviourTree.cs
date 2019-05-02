@@ -26,7 +26,10 @@ public class BehaviourTree : MonoBehaviour
     public  List<GameObject> allyTroops;
     private List<GameObject> enemiesCloseToBase;
     private List <GameObject> alliesCloseToBase;
-  
+    private int numberOfGatherersAlive;
+    private int maxNumberOfGatherersAlive =  4;
+
+
     public LayerMask enemiesLayer;
     private int[] classCounts;
     public Spawner spawner;
@@ -90,6 +93,9 @@ public class BehaviourTree : MonoBehaviour
                     enemiesCloseToBase.Add(enemyCol.gameObject);
             }
         }
+
+        Debug.Log("Enemies close to base count :   "+ enemiesCloseToBase.Count);
+
         orderBaseProxList();
     }
     private void orderBaseProxList()
@@ -145,28 +151,37 @@ public class BehaviourTree : MonoBehaviour
                 bool targetFound = false;
                 if(enemyTroopsAlive())
                 {
-                    foreach (GameObject enemyGO in unitScript.getClosestEnemyTroopWithoutUpdate())
+                    if(unitScript.getClosestEnemyTroop().Count>0)
                     {
-                        Debug.Log("Behaviour Tree closestEnemy Troop Count " + unitScript.getClosestEnemyTroopWithoutUpdate().Count);
-
-                        Unit enemyUnitScript = enemyGO.GetComponent<Unit>();
-
-                        if ((enemyUnitScript.CurrentTroopClass == sb.getMatchups()[unitScript.CurrentTroopClass]) || (enemyUnitScript.CurrentTroopClass == TroopClass.Gatherer))
+                        foreach (GameObject enemyGO in unitScript.getClosestEnemyTroop())
                         {
-                            troop.moveToGoal(enemyGO);
-                            targetFound = true;
-                            Task.current.Succeed();
-                            break;
+                            Debug.Log("Behaviour Tree closestEnemy Troop Count " + unitScript.getClosestEnemyTroopWithoutUpdate().Count);
+
+                            Unit enemyUnitScript = enemyGO.GetComponent<Unit>();
+
+                            if ((enemyUnitScript.CurrentTroopClass == sb.getMatchups()[unitScript.CurrentTroopClass]) || (enemyUnitScript.CurrentTroopClass == TroopClass.Gatherer))
+                            {
+                                troop.moveToGoal(enemyGO);
+                                targetFound = true;
+
+                                break;
+
+                            }
 
                         }
+                        if (targetFound == false)
+                        {
+                            troop.moveToGoal(unitScript.EnemySpawner.gameObject);
+                            Task.current.Succeed();
 
+                        }
                     }
-                    if (targetFound == false)
+                    else
                     {
                         troop.moveToGoal(unitScript.EnemySpawner.gameObject);
                         Task.current.Succeed();
-
                     }
+                   
                 }
                 else
                 {
@@ -205,9 +220,10 @@ public class BehaviourTree : MonoBehaviour
     [Task]
     public bool areEnemiesNearBase()
     {
+        updateEnemyTroopsList();
         drawBaseProximity();
         Debug.Log("Number of enemies near base" + enemiesCloseToBase.Count);
-        Debug.Log("Number of allies near base" + alliesCloseToBase.Count);
+       // Debug.Log("Number of allies near base" + alliesCloseToBase.Count);
 
         if (enemiesCloseToBase.Count > 0) return true;
         else return false;
@@ -218,14 +234,14 @@ public class BehaviourTree : MonoBehaviour
     {
         foreach (GameObject allyTroop in allyTroops)
         {
-            drawBaseProximity();
+           
             allyTroop.GetComponent<Unit>().moveToGoal(enemiesCloseToBase.First());
         }
         Task.current.Succeed();
     }
 
     [Task]
-    public void spawnGatherer()
+    public void purchaseGatherer()
     {
         if(spawner.purchaseUnit(TroopClass.Gatherer))
         Task.current.Succeed();
@@ -233,14 +249,14 @@ public class BehaviourTree : MonoBehaviour
 
     }
     [Task]
-    public void spawnWarrior()
+    public void purchaseWarrior()
     {
         if (spawner.purchaseUnit(TroopClass.Warrior))
         Task.current.Succeed();
         else Task.current.Fail();
     }
     [Task]
-    public void spawnArcher()
+    public void purchaseArcher()
     {
         if (spawner.purchaseUnit(TroopClass.Archer))
             Task.current.Succeed();
@@ -248,7 +264,7 @@ public class BehaviourTree : MonoBehaviour
 
     }
     [Task]
-    public void spawnMage()
+    public void purchaseMage()
     {
         if (spawner.purchaseUnit(TroopClass.Mage))
             Task.current.Succeed();
@@ -279,22 +295,22 @@ public class BehaviourTree : MonoBehaviour
 
     
     [Task]
-    void SpawnCounterTroop()
+    void purchaseCounterTroop()
     {
         TroopClass counterclasstospawn = findCounterClass();
         switch (counterclasstospawn)
         {
             case TroopClass.Warrior:
-                spawnWarrior();
+                purchaseWarrior();
                 Task.current.Succeed();
                 break;
             case TroopClass.Archer:
-                spawnArcher();
+                purchaseArcher();
                 Task.current.Succeed();
                 break;
 
             case TroopClass.Mage:
-                spawnMage();
+                purchaseMage();
                 Task.current.Succeed();
                 break;
 
@@ -361,27 +377,36 @@ public class BehaviourTree : MonoBehaviour
         if (go.GetComponent<Unit>() != null) return true;
         else return false;
     }
-    
+    [Task]
+    private bool gatherersAtMax()
+    {
+        if (numberOfGatherersAlive >= maxNumberOfGatherersAlive) return true;
+        else return false;
+    }
 
 // Update is called once per frame
     void FixedUpdate()
     {
-        updateEnemyTroopsList();
-        drawBaseProximity();
+       
     }
     private void updateEnemyTroopsList()
     {
+        numberOfGatherersAlive = 0;
         enemyTroops.Clear();
         allyTroops.Clear();
         foreach (GameObject unit in sb.getTroopsList())
         {
             if (unit.GetComponent<Unit>() != null)
             {
-                Debug.Log("TroopScript not null");
+               //Debug.Log("TroopScript not null");
 
                 Unit unitScript = unit.GetComponent<Unit>();
 
-                if ((unitScript.ThisTeamNumber == teamNumber)) allyTroops.Add(unit);
+                if ((unitScript.ThisTeamNumber == teamNumber))
+                {
+                    if (unit.GetComponent<GatherersAI>() != null) numberOfGatherersAlive++;
+                    allyTroops.Add(unit);
+                }
                 else if ((unitScript.ThisTeamNumber != teamNumber)) enemyTroops.Add(unit);
                 else Debug.Log("Error adding troop to ally/enemy lists");
 
@@ -391,8 +416,8 @@ public class BehaviourTree : MonoBehaviour
         }
         updateClassCounts();
 
-        //Debug.Log("AllyTroops length  = " + allyTroops.Count);
-        //Debug.Log("EnemyTroops length = " + enemyTroops.Count);
+        Debug.Log("AllyTroops length  = " + allyTroops.Count);
+        Debug.Log("EnemyTroops length = " + enemyTroops.Count);
     }
 
     private void updateClassCounts()
