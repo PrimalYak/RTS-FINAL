@@ -79,7 +79,7 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-       // autoPlay(TeamNumber.t2);
+        autoPlay(TeamNumber.t1);
 
     }
     public void autoPlay(TeamNumber teamNumber)

@@ -15,7 +15,7 @@ public class SceneBuilder : MonoBehaviour {
     public int maxTroopCount = 0;
 
     public float gameLength = 0f;
-    public float maxSpeedTowardsBase = 1.3f;
+    public float maxSpeedTowardsBase = 2f;
     public float normalMaxSpeed = 1f; 
 
     public GameObject base1;

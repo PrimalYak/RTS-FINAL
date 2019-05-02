@@ -39,7 +39,7 @@ namespace SwordGC.AI.Actions
 
             //costToApply = taskExecutor.scene.troopCosts[troopClass] - taskExecutor.WSU.classCounts[(int)troopClass];
 
-            cost = 2;
+            cost = 1;
 
 
         }

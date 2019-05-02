@@ -120,7 +120,6 @@ public abstract class Unit : MonoBehaviour
     void Update()
     {
         
-        updateBounds();
 
     }
 
@@ -183,13 +182,13 @@ public abstract class Unit : MonoBehaviour
     {
         if (ThisTeamNumber == TeamNumber.t1)
         { 
-            if(goalObject.transform.position.x < transform.position.x) AiPath.maxSpeed = Sb.maxSpeedTowardsBase;
+            if(goalObject.transform.position.x <= transform.position.x) AiPath.maxSpeed = Sb.maxSpeedTowardsBase;
             else AiPath.maxSpeed = Sb.normalMaxSpeed;
         }
        
         if (ThisTeamNumber == TeamNumber.t2)
         {
-            if (goalObject.transform.position.x > transform.position.x) AiPath.maxSpeed = Sb.maxSpeedTowardsBase;
+            if (goalObject.transform.position.x >= transform.position.x) AiPath.maxSpeed = Sb.maxSpeedTowardsBase;
             else AiPath.maxSpeed = Sb.normalMaxSpeed;
         }
             

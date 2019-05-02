@@ -143,9 +143,11 @@ public class BehaviourTree : MonoBehaviour
         if (isUnit(unitGO))
         {
             Unit unitScript = unitGO.GetComponent<Unit>();
+            
 
             if (unitScript.isTroop()) // Is a Troop
             {
+               
                 //Debug.Log("IS TROOP :: : : ");
                 TroopScript troop = unitGO.GetComponent<TroopScript>();
                 bool targetFound = false;
@@ -153,9 +155,9 @@ public class BehaviourTree : MonoBehaviour
                 {
                     if(unitScript.getClosestEnemyTroop().Count>0)
                     {
-                        foreach (GameObject enemyGO in unitScript.getClosestEnemyTroop())
+                        foreach (GameObject enemyGO in unitScript.getClosestEnemyTroopWithoutUpdate())
                         {
-                            Debug.Log("Behaviour Tree closestEnemy Troop Count " + unitScript.getClosestEnemyTroopWithoutUpdate().Count);
+                            Debug.Log("Troop "+ unitGO + "Behaviour Tree closestEnemy Troop Count " + unitScript.getClosestEnemyTroopWithoutUpdate().Count);
 
                             Unit enemyUnitScript = enemyGO.GetComponent<Unit>();
 
@@ -163,6 +165,8 @@ public class BehaviourTree : MonoBehaviour
                             {
                                 troop.moveToGoal(enemyGO);
                                 targetFound = true;
+                                decreaseTroopsLeftToManage();
+
 
                                 break;
 
@@ -172,43 +176,32 @@ public class BehaviourTree : MonoBehaviour
                         if (targetFound == false)
                         {
                             troop.moveToGoal(unitScript.EnemySpawner.gameObject);
-                            Task.current.Succeed();
+                            decreaseTroopsLeftToManage();
+
 
                         }
                     }
                     else
                     {
                         troop.moveToGoal(unitScript.EnemySpawner.gameObject);
-                        Task.current.Succeed();
+                        decreaseTroopsLeftToManage();
+
                     }
                    
                 }
                 else
                 {
-                    troop.setGoal(unitScript.EnemySpawner.gameObject);
-                    Task.current.Succeed();
-
+                    troop.moveToGoal(unitScript.EnemySpawner.gameObject);
                 }
 
 
             }
-            else if (unitScript.isGatherer()) // is a Gatherer
-            {
-                //GatherersAI gatherer = unitGO.GetComponent<GatherersAI>();
-                //if (gatherer.closestResources.First().gameObject != null)
-                //{
-                //    gatherer.setGoal(gatherer.closestResources.First().gameObject);
-                    Task.current.Succeed();
-
-                //}
-                //else Task.current.Fail();
-            }
+            
             else
             {
                 Debug.Log("Error in managing troops");
                 Task.current.Fail();
             }
-            decreaseTroopsLeftToManage();
 
         }
         else
@@ -216,6 +209,8 @@ public class BehaviourTree : MonoBehaviour
             Debug.Log("Non unit in allyTroops list");
             Task.current.Fail();
         }
+        Task.current.Succeed();
+
     }
     [Task]
     public bool areEnemiesNearBase()
